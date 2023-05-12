@@ -17,11 +17,11 @@ const Login = () => {
   // axios.defaults.withCredentials = true;
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("first")
+    console.log("first");
     axios
       .post("https://to-do-roek.onrender.com/user/login", {
-        username,
-        password,
+        username:username,
+        password:password,
       })
       .then((res) => {
         console.log(res);
@@ -52,8 +52,9 @@ const Login = () => {
               <div>
                 <label
                   for="password"
-                  className=" text-sm font-medium text-gray ">
-                  {" "}
+                  className=" text-sm font-medium text-gray "
+                >
+                  
                   Password
                 </label>
                 <input
@@ -67,7 +68,8 @@ const Login = () => {
               <div>
                 <button
                   type="submit "
-                  className="bg-pink-400 rounded-lg font-medium mt-5 w-full p-2">
+                  className="bg-pink-400 rounded-lg font-medium mt-5 w-full p-2"
+                >
                   Login
                 </button>
               </div>
@@ -77,8 +79,9 @@ const Login = () => {
               <p className="font-medium mt-5 ">
                 Didn't have an account?
                 <a
-                  href="#"
-                  className=" font-medium text-blue-500 hover:underline inline-flex m-2 ">
+                  href="/signup"
+                  className=" font-medium text-blue-500 hover:underline inline-flex m-2 "
+                >
                   Sign Up
                 </a>
               </p>
