@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Router, useNavigate } from "react-router-dom";
 
@@ -14,14 +14,16 @@ const Login = () => {
   const handlePassword = (e) => {
     setPassword(e.target.value);
   };
-  // axios.defaults.withCredentials = true;
+
+  // for including any cookies
+  axios.defaults.withCredentials = true;
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("first");
     axios
-      .post("https://to-do-roek.onrender.com/user/login", {
-        username:username,
-        password:password,
+      .post("http://localhost:8000/user/login", {
+        username,
+        password,
       })
       .then((res) => {
         console.log(res);
@@ -31,6 +33,29 @@ const Login = () => {
         console.log(err);
       });
   };
+  console.log("first");
+
+ 
+const [user, setUser] = useState(null);
+
+  useEffect(() => {
+
+    axios
+      .get("http://localhost:8000/user/verifytoken")
+      .then((response) => {
+        console.log(response);
+        setUser(response.data.username);
+        navigate("/home");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  // if(!user){
+  //   return<div>Loading...</div>
+  // }
+
   return (
     <div className=" bg-gray-700">
       <div className="flex flex-col items-center justify-center px-6 py-2  md:h-screen  ">
@@ -38,7 +63,7 @@ const Login = () => {
           <div className="p-6">
             <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
               <div>
-                <label for="email" className=" text-sm font-medium text-gray">
+                <label className=" text-sm font-medium text-gray">
                   Username
                 </label>
                 <input
@@ -50,11 +75,7 @@ const Login = () => {
                 />
               </div>
               <div>
-                <label
-                  for="password"
-                  className=" text-sm font-medium text-gray "
-                >
-                  
+                <label className=" text-sm font-medium text-gray ">
                   Password
                 </label>
                 <input
